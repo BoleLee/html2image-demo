@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>html转为图片demo</title>
+  <style>
+    body {
+      margin: 50px auto;
+    }
+    * {
+      padding: 0;
+      margin: 0;
+    }
+    ul {
+      list-style: none;
+    }
+    canvas {
+      border: 1px solid black;
+    }
+    button {
+      line-height: 2.8;
+      padding: 0 5px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .step-wrap {
+      width: 500px;
+      margin: 0 auto;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+<div class="step-wrap">
+  <h1>要渲染的HTML</h1>
+  <div id="J_content" style="width: 500px; height: 545px; font-size: 25px; margin: 0px auto; background-color: rgb(238, 238, 238);">
+    <section>
+      <div id="J_bg_img" style="background-image: url(02-2.png); position: relative; width: 20em; height: 21.8em; margin: auto; background-repeat: no-repeat; background-size: cover; background-position: center center;">
+        <section>
+          <ul>
+            <li style="position: static; padding-top: 4em; margin-bottom: 1.2em; text-align: center;">
+              <section>
+                <h2 style="font-family: &quot;Microsoft YaHei&quot;; font-size: 1.6em; color: rgb(180, 28, 34);">国庆节放假通知</h2>
+              </section>
+            </li>
+            <li style="position: static; padding: 0px 1.2em; text-align: left;">
+              <section>
+                <div>
+                  <p style="font-family: &quot;Microsoft YaHei&quot;; font-size: 0.84em; color: rgb(131, 0, 5); line-height: 1.6em;">各位教职员工、各位同学：</p>
+                  <p style="text-indent: 2em; overflow-wrap: break-word; word-break: break-all; white-space: pre-wrap; font-family: &quot;Microsoft YaHei&quot;; font-size: 0.84em; color: rgb(131, 0, 5); line-height: 1.6em;">根据国务院发布的《全国年节及纪放假方法》规定，我校将放假8天，从2017年10月1日到10月8日，请全体师生依照上述安排，调整作息，欢度假期。</p>
+                  <p style="text-indent: 2em; overflow-wrap: break-word; word-break: break-all; white-space: pre-wrap; font-family: &quot;Microsoft YaHei&quot;; font-size: 0.84em; color: rgb(131, 0, 5); line-height: 1.6em;"></p>
+                </div>
+              </section>
+            </li>
+            <li style="position: absolute; right: 0px; bottom: 1.2em; padding: 0px 1.2em; text-align: right;">
+              <section>
+                <div style="font-family: &quot;Microsoft YaHei&quot;; font-size: 0.84em; color: rgb(131, 0, 5); line-height: 1.6em;"><p>校长办公室</p> <p>二Ｏ一七年一月十日</p>
+                </div>
+              </section>
+            </li>
+          </ul>
+        </section>
+      </div>
+    </section>
+  </div>
+</div>
+<div class="step-wrap">
+  <h1>转换成canvas</h1>
+  <canvas width="500" height="200"></canvas>
+  <button>Run html2canvas</button>
+</div>
+<div class="step-wrap">
+  <h1>生成图片</h1>
+  <button id="J_canvas2image">Run canvas2image</button>
+  <div id="J_image"></div>
+</div>  
+
+
+<script type="text/javascript" src="./html2canvas.js"></script>
+<script type="text/javascript">
+    var canvas = document.querySelector("canvas");
+    var ctx = canvas.getContext("2d");
+
+    var ctx = canvas.getContext('2d');
+
+    ctx.beginPath();
+    ctx.arc(75,75,50,0,Math.PI*2,true); // Outer circle
+    ctx.moveTo(110,75);
+    ctx.arc(75,75,35,0,Math.PI,false);   // Mouth (clockwise)
+    ctx.moveTo(65,65);
+    ctx.arc(60,65,5,0,Math.PI*2,true);  // Left eye
+    ctx.moveTo(95,65);
+    ctx.arc(90,65,5,0,Math.PI*2,true);  // Right eye
+    ctx.stroke();
+
+    document.querySelector("button").addEventListener("click", function() {
+        html2canvas(document.querySelector("#J_content"), {canvas: canvas}).then(function(canvas) {
+            console.log('Drew on the existing canvas');
+        });
+    }, false);
+
+    document.getElementById('J_canvas2image').addEventListener('click', function() {
+      let image = convertCanvasToImage(canvas)
+      document.getElementById('J_image').appendChild(image)
+    }, false)
+
+
+    function convertCanvasToImage(canvas) {
+      var image = new Image();
+      image.src = canvas.toDataURL("image/png");
+      console.log(image)
+
+      return image;
+    }
+</script>
+</body>
+</html>
